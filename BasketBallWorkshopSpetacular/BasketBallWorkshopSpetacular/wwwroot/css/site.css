@@ -1,0 +1,19 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-image: url(https://t3.ftcdn.net/jpg/01/41/69/46/360_F_141694662_GmNxTKSKTHOSynRFewpQqOhody5EhIRo.jpg)
+}
