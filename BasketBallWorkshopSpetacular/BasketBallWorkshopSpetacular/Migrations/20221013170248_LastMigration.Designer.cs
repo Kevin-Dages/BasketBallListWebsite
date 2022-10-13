@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketBallWorkshopSpetacular.Migrations
 {
     [DbContext(typeof(BasketballContext))]
-    [Migration("20221011211129_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20221013170248_LastMigration")]
+    partial class LastMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,8 +39,7 @@ namespace BasketBallWorkshopSpetacular.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId")
-                        .IsUnique();
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Coaches");
                 });
@@ -119,13 +118,25 @@ namespace BasketBallWorkshopSpetacular.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Teams");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Cavs"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bulls"
+                        });
                 });
 
             modelBuilder.Entity("Basketball_Workshop.Models.Coach", b =>
                 {
                     b.HasOne("Basketball_Workshop.Models.Team", "Team")
-                        .WithOne("Coach")
-                        .HasForeignKey("Basketball_Workshop.Models.Coach", "TeamId")
+                        .WithMany("Coach")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

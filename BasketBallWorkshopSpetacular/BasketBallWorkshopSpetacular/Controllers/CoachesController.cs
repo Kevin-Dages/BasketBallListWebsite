@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Basketball_Workshop;
 using Basketball_Workshop.Models;
+using NuGet.Protocol;
 
-namespace BasketBallWorkshopSpetacular.Controllers
+namespace Basketball_Workshop.Controllers
 {
     public class CoachesController : Controller
     {
@@ -48,7 +49,10 @@ namespace BasketBallWorkshopSpetacular.Controllers
         // GET: Coaches/Create
         public IActionResult Create()
         {
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id");
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
+
+            //Console.WriteLine(ViewData["TeamId"].ToJson());
+
             return View();
         }
 
@@ -57,15 +61,17 @@ namespace BasketBallWorkshopSpetacular.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Team")] Coach coach)
+        public async Task<IActionResult> Create([Bind("Id,Name,TeamId")] Coach coach)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(coach);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", coach.Team.Name);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
+
             return View(coach);
         }
 
@@ -82,7 +88,8 @@ namespace BasketBallWorkshopSpetacular.Controllers
             {
                 return NotFound();
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", coach.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
+
             return View(coach);
         }
 
@@ -118,7 +125,9 @@ namespace BasketBallWorkshopSpetacular.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", coach.TeamId);
+            //ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
+
             return View(coach);
         }
 
@@ -155,14 +164,14 @@ namespace BasketBallWorkshopSpetacular.Controllers
             {
                 _context.Coaches.Remove(coach);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CoachExists(int id)
         {
-          return _context.Coaches.Any(e => e.Id == id);
+            return (_context.Coaches?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

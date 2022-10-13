@@ -48,7 +48,7 @@ namespace BasketBallWorkshopSpetacular.Controllers
         // GET: Players/Create
         public IActionResult Create()
         {
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id");
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace BasketBallWorkshopSpetacular.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
             return View(player);
         }
 
@@ -82,7 +82,7 @@ namespace BasketBallWorkshopSpetacular.Controllers
             {
                 return NotFound();
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
             return View(player);
         }
 
@@ -118,7 +118,7 @@ namespace BasketBallWorkshopSpetacular.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Id", player.TeamId);
+            ViewData["TeamId"] = new SelectList(_context.Teams, "Id", "Name");
             return View(player);
         }
 

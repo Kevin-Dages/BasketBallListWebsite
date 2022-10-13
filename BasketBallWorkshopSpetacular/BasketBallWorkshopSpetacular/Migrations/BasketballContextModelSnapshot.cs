@@ -37,8 +37,7 @@ namespace BasketBallWorkshopSpetacular.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId")
-                        .IsUnique();
+                    b.HasIndex("TeamId");
 
                     b.ToTable("Coaches");
                 });
@@ -134,8 +133,8 @@ namespace BasketBallWorkshopSpetacular.Migrations
             modelBuilder.Entity("Basketball_Workshop.Models.Coach", b =>
                 {
                     b.HasOne("Basketball_Workshop.Models.Team", "Team")
-                        .WithOne("Coach")
-                        .HasForeignKey("Basketball_Workshop.Models.Coach", "TeamId")
+                        .WithMany("Coach")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
